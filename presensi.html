@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presensi Siswa SDN 2 Baderan</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      font-size: 13px;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    h2 {
+      font-weight: 600;
+    }
+    thead th {
+      background-color: #BEBEBE !important;
+      color: black !important;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      padding: 14px !important;
+    }
+    tbody td {
+      vertical-align: middle;
+      text-align: center;
+      font-size: 13px;
+    }
+    tbody td:nth-child(2) {
+      text-align: left;
+    }
+    tbody tr:nth-child(odd) {
+      background-color: #e9f2fb;
+    }
+    tbody tr:hover {
+      background-color: #d0e7fb;
+    }
+    .btn-icon {
+      padding: 4px 8px;
+    }
+    .material-icons {
+      vertical-align: middle;
+      font-size: 14px;
+    }
+    .swal2-popup {
+      font-size: 13px !important;
+      border-radius: 10px;
+      padding: 1.2em 1.5em !important;
+    }
+    .swal2-title {
+      font-size: 14px !important;
+      font-weight: 600;
+    }
+    .swal2-html-container {
+      font-size: 13px !important;
+    }
+    .swal2-confirm, .swal2-cancel {
+      font-size: 13px !important;
+      padding: 8px 16px !important;
+      border-radius: 8px;
+    }
+    select.keterangan-dropdown {
+      font-size: 13px;
+      padding: 4px 6px;
+    }
+    .btn-presensi {
+      font-size: 13px;
+      padding: 4px 10px;
+    }
+    @media (max-width: 768px) {
+      #tabelSiswa tbody td {
+        text-align: left !important;
+      }
+    }
+    /* Khusus pagination tombol */
+   .dataTables_wrapper .dataTables_paginate .paginate_button {
+   font-size: 13px !important;
+   line-height: normal !important;
+   }
+   /* Jika pakai Bootstrap 4 atau 5 */
+   .dataTables_wrapper .dataTables_paginate .pagination .page-link {
+   font-size: 13px !important;
+   padding: 3px 8px !important;
+   }
+   .dataTables_wrapper .dataTables_paginate {
+   margin-bottom: 1rem; /* atau misalnya 16px */
+   }
+  </style>
+  <style>
+  .custom-navbar {
+    background: linear-gradient(90deg, #0d6efd, #4dabf7);
+    font-family: 'Poppins', sans-serif;
+    border-radius: 12px;
+  }
+
+  .nav-link {
+    font-weight: 500;
+    font-size: 14px;
+    color: #fff !important;
+    transition: background 0.3s, padding-left 0.3s;
+    border-radius: 8px;
+    padding: 6px 12px;
+  }
+
+  .nav-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+    padding-left: 16px;
+  }
+
+  .navbar-brand {
+    font-size: 18px;
+  }
+
+  .navbar-toggler {
+    border: none;
+  }
+
+  .navbar-toggler .material-icons {
+    color: white;
+    font-size: 28px;
+  }
+  </style>
+</head>
+<body>
+ <!-- Navbar Modern -->
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar shadow-sm rounded-2 mt-2 mx-2">
+      <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+          <span class="material-icons me-2">school</span>
+          <strong>Presensi</strong>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" 
+          aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="material-icons">menu</span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-end">
+            <li class="nav-item">
+              <a class="nav-link active d-flex align-items-center" href="presensi.html"><span class="material-icons me-1">group</span> Presensi Siswa</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link d-flex align-items-center" href="datasiswa.html"><span class="material-icons me-1">description</span> Data Siswa</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link d-flex align-items-center" href="https://wa.me/6281333205075"><span class="material-icons me-1">chat</span> Kontak</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link d-flex align-items-center" href="#" onclick="logout()"><span class="material-icons me-1">logout</span> Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+  <div class="container mt-3 mb-3">
+    <h5 class="mb-3">Daftar Presensi Siswa</h5>
+    <div class="d-flex justify-content-start mb-3">
+      <a href="datasiswa.html" class="btn btn-outline-primary" style="font-size: 13px;">
+        <span class="material-icons-outlined align-middle me-1" style="font-size: 16px;">settings</span>
+        Edit Data Siswa
+      </a>
+    </div>
+    <table id="tabelSiswa" class="table table-striped dt-responsive nowrap" style="width:100%;">
+      <thead>
+        <tr>
+          <th style="text-align: center">Kelas</th>
+          <th style="text-align: center">Nama Siswa</th>
+          <th style="text-align: center">NISN</th>
+          <th style="text-align: center">WhatsApp</th>
+          <th style="text-align: center">Keterangan</th>
+          <th style="text-align: center">Kirim Presensi</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    const SPREADSHEET_URL = "https://script.google.com/macros/s/AKfycbza6AfIrsecOwvGvCVa50DwljhtjX2VBciHkngaEEAPbImoH3yyXswyfZz6nIu1pCs0CA/exec";
+    Swal.fire({ title: 'Memuat data...', text: 'Silakan tunggu sebentar.', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+    fetch(SPREADSHEET_URL)
+      .then(response => response.json())
+      .then(data => {
+        const tableBody = $('#tabelSiswa tbody');
+        data.forEach((row, index) => {
+          const keteranganOptions = `
+            <select class="form-select form-select-sm keterangan-dropdown" id="keterangan-${index}" onchange="syncKeterangan(this, ${index})">
+              <option value="Pilih keterangan">Pilih keterangan</option>
+              <option value="Hadir">Hadir</option>
+              <option value="Sakit">Sakit</option>
+              <option value="Ijin">Ijin</option>
+              <option value="Alpa">Alpa</option>
+            </select>
+            <input type="hidden" id="mirror-keterangan-${index}" value="Pilih keterangan">
+          `;
+          const btnPresensi = `
+            <center><button class="btn btn-outline-primary btn-sm d-flex align-items-center gap-1 px-2 py-1 btn-kirim-presensi"
+              data-index="${index}" data-nama="${row.Nama}" data-nisn="${row.NISN}" data-wa="${row.WhatsApp}">
+              <span class="material-icons-outlined" style="font-size: 16px;">send</span>
+              <span style="font-size: 13px;">Kirim Pesan</span>
+            </button></center>
+          `;
+          const rowHtml = `
+            <tr>
+              <td>${row.Kelas}</td>
+              <td>${row.Nama}</td>
+              <td>${row.NISN}</td>
+              <td>${row.WhatsApp}</td>
+              <td>${keteranganOptions}</td>
+              <td>${btnPresensi}</td>
+            </tr>
+          `;
+          tableBody.append(rowHtml);
+        });
+        const table = $('#tabelSiswa').DataTable({
+          responsive: true,
+          drawCallback: function () {
+            $('.btn-kirim-presensi').off('click').on('click', function () {
+              const index = $(this).data('index');
+              const nama = $(this).data('nama');
+              const nisn = $(this).data('nisn');
+              kirimPresensi(index, nama, nisn);
+            });
+          }
+        });
+
+        Swal.fire({ icon: 'success', title: 'Data berhasil dimuat!', showConfirmButton: false, timer: 1500 });
+      })
+      .catch(error => {
+        Swal.fire({ icon: 'error', title: 'Gagal memuat data!', text: 'Terjadi kesalahan saat mengambil data.' });
+        console.error('Error fetching data:', error);
+      });
+    function syncKeterangan(selectElem, index) {
+      document.getElementById(`mirror-keterangan-${index}`).value = selectElem.value;
+    }
+    function kirimPresensi(index, nama, nisn, nomorWA) {
+      const keterangan = document.getElementById(`mirror-keterangan-${index}`).value;
+      if (keterangan === "Pilih keterangan") {
+        Swal.fire({ icon: "warning", title: "Keterangan belum dipilih!", text: "Silakan pilih keterangan terlebih dahulu." });
+        return;
+      }
+      Swal.fire({
+        title: "Yakin ingin mengirim presensi?",
+        html: `<strong>${nama}</strong><br>NISN: ${nisn}<br>Keterangan: ${keterangan}`,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Kirim",
+        cancelButtonText: "Batal"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const latitude = "-7.8653392";
+          const longitude = "113.698292";
+          const now = new Date();
+          const timestamp = `${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getDate()).padStart(2, '0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+          const formData = new URLSearchParams();
+          formData.append("nama", nama);
+          formData.append("nisn", `'${nisn}`);
+          formData.append("keterangan", keterangan);
+          formData.append("nomorWA", `'${nomorWA}`);
+          formData.append("latitude", latitude);
+          formData.append("longitude", longitude);
+          formData.append("timestamp", timestamp);
+          formData.append("sheet", "Data Harian");
+          Swal.fire({ title: "Mengirim presensi...", text: "Mohon tunggu sebentar.", allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+          fetch(SPREADSHEET_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: formData.toString()
+          })
+          .then(response => {
+            if (!response.ok) throw new Error("Network response was not ok");
+            return response.text();
+          })
+          .then(() => {
+            Swal.fire({ icon: "success", title: "Presensi berhasil dikirim!", showConfirmButton: false, timer: 1500 });
+          })
+          .catch(() => {
+            Swal.fire({ icon: "error", title: "Gagal mengirim presensi!", text: "Silakan coba lagi nanti." });
+          });
+        }
+      });
+    }
+    // Delegated click handler
+    $(document).on('click', '.btn-kirim-presensi', function () {
+      const index = $(this).data('index');
+      const nama = $(this).data('nama');
+      const nisn = $(this).data('nisn');
+      const nomorWA = $(this).data('wa');
+    
+      kirimPresensi(index, nama, nisn, nomorWA);
+    });
+    
+  </script>
+  
+  <script>
+  if (localStorage.getItem("isLoggedIn") !== "true") {
+    window.location.href = "index.html"; // redirect ke login kalau belum login
+  }
+  
+  function logout() {
+    localStorage.removeItem("isLoggedIn");
+    window.location.href = "index.html";
+  }
+  </script>
+
+</body>
+</html>

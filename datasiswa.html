@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Data Siswa SDN 2 Baderan</title>
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"/>
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+
+  <!-- Style utama -->
+  <style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    background-color: #f8f9fa;
+    color: #333;
+  }
+
+  h2 {
+    font-weight: 600;
+  }
+
+  thead th {
+    background-color: #BEBEBE !important;
+    color: black !important;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    padding: 14px !important;
+  }
+
+  tbody td {
+    vertical-align: middle;
+    text-align: center;
+    font-size: 13px;
+  }
+
+  tbody td:nth-child(2) {
+    text-align: left;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: #e9f2fb;
+  }
+
+  tbody tr:hover {
+    background-color: #d0e7fb;
+  }
+
+  .btn-icon {
+    padding: 4px 8px;
+  }
+
+  .material-icons {
+    vertical-align: middle;
+    font-size: 14px;
+  }
+
+  .swal2-popup {
+    font-size: 13px !important;
+    border-radius: 10px;
+    padding: 1.2em 1.5em !important;
+  }
+
+  .swal2-title {
+    font-size: 14px !important;
+    font-weight: 600;
+  }
+
+  .swal2-html-container {
+    font-size: 13px !important;
+  }
+
+  .swal2-confirm, .swal2-cancel {
+    font-size: 13px !important;
+    padding: 8px 16px !important;
+    border-radius: 8px;
+  }
+
+  select.keterangan-dropdown {
+    font-size: 13px;
+    padding: 4px 6px;
+  }
+
+  .btnEdit {
+    font-size: 13px;
+    padding: 4px 10px;
+  }
+  .btnHapus {
+    font-size: 13px;
+    padding: 4px 10px;
+  }
+
+  @media (max-width: 768px) {
+    #tabelSiswa tbody td {
+      text-align: left !important;
+    }
+
+    .swal2-popup {
+      font-size: 13px !important;
+    }
+
+    .swal2-title {
+      font-size: 14px !important;
+    }
+
+    .swal2-html-container {
+      font-size: 13px !important;
+    }
+
+    .swal2-confirm, .swal2-cancel {
+      font-size: 13px !important;
+      padding: 6px 14px !important;
+    }
+  }
+  /* Khusus pagination tombol */
+  .dataTables_wrapper .dataTables_paginate .paginate_button {
+  font-size: 13px !important;
+  line-height: normal !important;
+  }
+  /* Jika pakai Bootstrap 4 atau 5 */
+  .dataTables_wrapper .dataTables_paginate .pagination .page-link {
+  font-size: 13px !important;
+  padding: 3px 8px !important;
+  }
+  .dataTables_wrapper .dataTables_paginate {
+  margin-bottom: 1rem; /* atau misalnya 16px */
+  }
+  </style>
+  <style>
+  .custom-navbar {
+    background: linear-gradient(90deg, #0d6efd, #4dabf7);
+    font-family: 'Poppins', sans-serif;
+    border-radius: 12px;
+  }
+
+  .nav-link {
+    font-weight: 500;
+    font-size: 14px;
+    color: #fff !important;
+    transition: background 0.3s, padding-left 0.3s;
+    border-radius: 8px;
+    padding: 6px 12px;
+  }
+
+  .nav-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+    padding-left: 16px;
+  }
+
+  .navbar-brand {
+    font-size: 18px;
+  }
+
+  .navbar-toggler {
+    border: none;
+  }
+
+  .navbar-toggler .material-icons {
+    color: white;
+    font-size: 28px;
+  }
+  </style>
+
+</head>
+<body>
+  <!-- Navbar Modern -->
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar shadow-sm rounded-2 mt-2 mx-2">
+      <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+          <span class="material-icons me-2">school</span>
+          <strong>Presensi</strong>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" 
+          aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="material-icons">menu</span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-end">
+            <li class="nav-item">
+              <a class="nav-link active d-flex align-items-center" href="presensi.html"><span class="material-icons me-1">group</span> Presensi Siswa</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link d-flex align-items-center" href="datasiswa.html"><span class="material-icons me-1">description</span> Data Siswa</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link d-flex align-items-center" href="https://wa.me/62b1333205075"><span class="material-icons me-1">chat</span> Kontak</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link d-flex align-items-center" href="#" onclick="logout()"><span class="material-icons me-1">logout</span> Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+  <div class="container mt-3 mb-3">
+    <h5 class="mb-3">Manajemen Data Siswa</h5>
+    <!-- Tombol Edit Data Siswa dengan gaya outline -->
+    <div class="d-flex justify-content-start mb-3">
+      <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalTambahSiswa" style="font-size: 13px;">
+      <span class="material-icons align-middle me-1" style="font-size: 16px;">
+        add
+      </span>
+      Tambah Data Siswa
+      </a>
+    </div>
+    <table id="tabelSiswa" class="table table-striped dt-responsive nowrap w-100">
+      <thead>
+        <tr>
+          <th style="text-align: center">Kelas</th>
+          <th style="text-align: center">Nama Siswa</th>
+          <th style="text-align: center">NISN</th>
+          <th style="text-align: center">WhatsApp</th>
+          <th style="text-align: center">Aksi</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- Modal Tambah Data Siswa -->
+    <div class="modal fade" id="modalTambahSiswa" tabindex="-1" aria-labelledby="modalTambahSiswaLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form id="formTambahSiswa">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalTambahSiswaLabel">Tambah Data Siswa</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="tambahKelas" class="form-label">Kelas</label>
+                <input type="text" class="form-control" id="tambahKelas" required>
+              </div>
+              <div class="mb-3">
+                <label for="tambahNama" class="form-label">Nama</label>
+                <input type="text" class="form-control" id="tambahNama" required>
+              </div>
+              <div class="mb-3">
+                <label for="tambahNISN" class="form-label">NISN</label>
+                <input type="text" class="form-control" id="tambahNISN" required>
+              </div>
+              <div class="mb-3">
+                <label for="tambahWA" class="form-label">WhatsApp</label>
+                <input type="text" class="form-control" id="tambahWA" placeholder="Contoh: 08123456789" required>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Simpan</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  <!-- Modal Edit Siswa -->
+  <div class="modal fade" id="modalEditSiswa" tabindex="-1" aria-labelledby="modalEditLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="formEditSiswa">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalEditLabel">Edit Data Siswa</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="editIndex" />
+            <div class="mb-3">
+              <label for="editKelas" class="form-label">Kelas</label>
+              <input type="text" class="form-control" id="editKelas" required />
+            </div>
+            <div class="mb-3">
+              <label for="editNama" class="form-label">Nama Siswa</label>
+              <input type="text" class="form-control" id="editNama" required />
+            </div>
+            <div class="mb-3">
+              <label for="editNISN" class="form-label">NISN</label>
+              <input type="text" class="form-control" id="editNISN" required />
+            </div>
+            <div class="mb-3">
+              <label for="editWhatsApp" class="form-label">WhatsApp</label>
+              <input type="text" class="form-control" id="editWhatsApp" required />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    const SPREADSHEET_URL = "https://script.google.com/macros/s/AKfycbza6AfIrsecOwvGvCVa50DwljhtjX2VBciHkngaEEAPbImoH3yyXswyfZz6nIu1pCs0CA/exec";
+    let dataSiswa = [];
+
+    const table = $('#tabelSiswa').DataTable({
+      responsive: true,
+      autoWidth: false,
+    });
+
+    Swal.fire({
+      title: 'Memuat data siswa...',
+      text: 'Silakan tunggu sebentar.',
+      allowOutsideClick: false,
+      didOpen: () => Swal.showLoading()
+    });
+
+    fetch(SPREADSHEET_URL + "?sheet=Data Siswa")
+      .then(res => res.json())
+      .then(data => {
+        dataSiswa = data;
+        renderTabelSiswa();
+        Swal.fire({ icon: 'success', title: 'Berhasil dimuat!', timer: 1500, showConfirmButton: false });
+      })
+      .catch(err => {
+        console.error(err);
+        Swal.fire({ icon: 'error', title: 'Gagal!', text: 'Data siswa tidak dapat dimuat.' });
+      });
+
+    function renderTabelSiswa() {
+      table.clear();
+      dataSiswa.forEach((siswa, index) => {
+        const btnEdit = `<button class="btn btn-sm btn-outline-primary btn-icon" onclick="editSiswa(${index})" title="Edit"><span class="material-icons" style="font-size: 16px;">edit</span></button>`;
+        const btnHapus = `<button class="btn btn-sm btn-outline-danger btn-icon" onclick="hapusSiswa(${index}, '${siswa.Nama}')" title="Hapus" style="font-size: 15px;"><span class="material-icons">delete</span></button>`;
+        table.row.add([siswa.Kelas, siswa.Nama, siswa.NISN, siswa.WhatsApp, btnEdit + ' ' + btnHapus]);
+      });
+      table.draw();
+      table.columns.adjust().responsive.recalc(); // << Penting!
+    }
+
+    function editSiswa(index) {
+      const siswa = dataSiswa[index];
+      $('#editIndex').val(index);
+      $('#editKelas').val(siswa.Kelas);
+      $('#editNama').val(siswa.Nama);
+      $('#editNISN').val(siswa.NISN);
+      $('#editWhatsApp').val(siswa.WhatsApp);
+      new bootstrap.Modal(document.getElementById('modalEditSiswa')).show();
+    }
+
+    $('#formEditSiswa').on('submit', function (e) {
+      e.preventDefault();
+      simpanEditSiswa();
+    });
+
+    function simpanEditSiswa() {
+      const index = $('#editIndex').val();
+      const formData = new URLSearchParams({
+        action: 'update',
+        index: index,
+        kelas: $('#editKelas').val(),
+        nama: $('#editNama').val(),
+        nisn: `'${$('#editNISN').val().trim()}`,
+        whatsapp: $('#editWhatsApp').val()
+      });
+
+      Swal.fire({ title: 'Menyimpan...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+
+      fetch(SPREADSHEET_URL, {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.text())
+      .then(response => {
+        Swal.close();
+        if (response.includes("berhasil")) {
+          Swal.fire({ icon: 'success', title: 'Tersimpan!', timer: 1500, showConfirmButton: false });
+          bootstrap.Modal.getInstance(document.getElementById('modalEditSiswa')).hide();
+          setTimeout(() => location.reload(), 1600);
+        } else {
+          Swal.fire({ icon: 'error', title: 'Gagal menyimpan!' });
+        }
+      })
+      .catch(() => {
+        Swal.fire({ icon: 'error', title: 'Terjadi kesalahan!' });
+      });
+    }
+
+    function hapusSiswa(index, nama) {
+      Swal.fire({
+        title: 'Yakin ingin menghapus?',
+        text: `Data siswa "${nama}" akan dihapus.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, hapus',
+        cancelButtonText: 'Batal'
+      }).then(result => {
+        if (result.isConfirmed) {
+          // Hapus dari array lokal
+          dataSiswa.splice(index, 1);
+          renderTabelSiswa();
+    
+          // Kirim permintaan hapus ke Google Apps Script
+          fetch(`${SPREADSHEET_URL}?action=hapus&index=${index}`)
+            .then(response => response.json())
+            .then(result => {
+              if (result.success) {
+                Swal.fire('Dihapus!', `Data siswa "${nama}" telah dihapus dari Spreadsheet.`, 'success');
+              } else {
+                Swal.fire('Gagal!', result.message || 'Gagal menghapus dari Spreadsheet.', 'error');
+              }
+            })
+            .catch(error => {
+              Swal.fire('Error!', 'Terjadi kesalahan koneksi.', 'error');
+              console.error('Fetch error:', error);
+            });
+        }
+      });
+    }
+    
+    document.getElementById('formTambahSiswa').addEventListener('submit', function (e) {
+      e.preventDefault();
+    
+      const kelas = document.getElementById('tambahKelas').value;
+      const nama = document.getElementById('tambahNama').value;
+      const nisn = "'" + document.getElementById('tambahNISN').value; // simpan nol di awal
+      const whatsapp = document.getElementById('tambahWA').value;
+    
+      // Tampilkan popup loading
+      Swal.fire({
+        title: 'Menyimpan...',
+        text: 'Mohon tunggu sebentar',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+    
+      fetch(SPREADSHEET_URL, {
+        method: 'POST',
+        body: new URLSearchParams({
+          action: 'tambah',
+          kelas,
+          nama,
+          nisn,
+          whatsapp
+        })
+      })
+      .then(response => response.text())
+      .then(msg => {
+        Swal.close(); // Tutup popup loading
+        Swal.fire('Berhasil', 'Data siswa berhasil ditambahkan.', 'success');
+        document.getElementById('formTambahSiswa').reset();
+        bootstrap.Modal.getInstance(document.getElementById('modalTambahSiswa')).hide();
+        renderTabelSiswa(); // reload data siswa
+      })
+      .catch(err => {
+        Swal.close(); // Tutup popup loading
+        Swal.fire('Gagal', 'Terjadi kesalahan saat menyimpan data.', 'error');
+        console.error(err);
+      });
+    });
+  </script>
+  <script>
+  if (localStorage.getItem("isLoggedIn") !== "true") {
+    window.location.href = "index.html"; // redirect ke login kalau belum login
+  }
+  
+  function logout() {
+    localStorage.removeItem("isLoggedIn");
+    window.location.href = "index.html";
+  }
+  </script>
+</body>
+</html>
